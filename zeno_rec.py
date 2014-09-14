@@ -7,11 +7,21 @@ from UI_zeno_rec import Ui_zeno_rec
 
 
 class StartQT4(QtGui.QMainWindow):
+    numMotors=12
+    motorNamesAndCat=[]#as in yaml array of tuple name,left or right
+    motorPositionTopics=[]#List
+    motorTorqueServices=[]#List
+    motorTorqueStates=[]#bool List
+    motorTrajectoryTopics=[]#dictionary category:TrajectoryTopic
+
+    totalFrames=1
+    currentFrame=1
+
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
         self.ui = Ui_zeno_rec()
         self.ui.setupUi(self)
-        self.ui.btnRec.setEnabled(self.ui.chkAllMotors.isChecked())
+
         QtCore.QObject.connect(self.ui.chkR1,QtCore.SIGNAL("toggled(bool)"),self.chkR1)
         QtCore.QObject.connect(self.ui.chkR2,QtCore.SIGNAL("toggled(bool)"),self.chkR2)
         QtCore.QObject.connect(self.ui.chkR3,QtCore.SIGNAL("toggled(bool)"),self.chkR3)
@@ -28,6 +38,8 @@ class StartQT4(QtGui.QMainWindow):
         QtCore.QObject.connect(self.ui.chkRA,QtCore.SIGNAL("toggled(bool)"),self.chkRA)
         QtCore.QObject.connect(self.ui.chkAllMotors,QtCore.SIGNAL("toggled(bool)"),self.chkAllMotors)
         QtCore.QObject.connect(self.ui.btnStopAll,QtCore.SIGNAL("toggled(bool)"),self.stopAll)
+
+        self.ui.btnRec.setEnabled(self.ui.chkAllMotors.isChecked())
         self.ui.chkAllMotors.setEnabled(False)
         self.ui.chkR1.setEnabled(False)
         self.ui.chkR2.setEnabled(False)
@@ -43,6 +55,47 @@ class StartQT4(QtGui.QMainWindow):
         self.ui.chkL12.setEnabled(False)
         self.ui.chkRA.setEnabled(False)
         self.ui.chkLA.setEnabled(False)
+
+        QtCore.QObject.connect(self.ui.btnRec,QtCore.SIGNAL("clicked()"),self.btnRec)
+        QtCore.QObject.connect(self.ui.btnDelCurrent,QtCore.SIGNAL("clicked()"),self.btnDelCurrent)
+        QtCore.QObject.connect(self.ui.btnDel,QtCore.SIGNAL("clicked()"),self.btnDel)
+        QtCore.QObject.connect(self.ui.btnCopy,QtCore.SIGNAL("clicked()"),self.btnCopy)
+        QtCore.QObject.connect(self.ui.btnFirst,QtCore.SIGNAL("clicked()"),self.btnFirst)
+        QtCore.QObject.connect(self.ui.btnLast,QtCore.SIGNAL("clicked()"),self.btnLast)
+        QtCore.QObject.connect(self.ui.btnSave,QtCore.SIGNAL("clicked()"),self.btnSave)
+        QtCore.QObject.connect(self.ui.btnSaveAs,QtCore.SIGNAL("clicked()"),self.btnSaveAs)
+        QtCore.QObject.connect(self.ui.btnLoad,QtCore.SIGNAL("clicked()"),self.btnLoad)
+        QtCore.QObject.connect(self.ui.btnImport,QtCore.SIGNAL("clicked()"),self.btnImport)
+        QtCore.QObject.connect(self.ui.btnInsert,QtCore.SIGNAL("clicked()"),self.btnInsert)
+        QtCore.QObject.connect(self.ui.btnSetFrame,QtCore.SIGNAL("clicked()"),self.btnSetFrame)
+        QtCore.QObject.connect(self.ui.btnPlay,QtCore.SIGNAL("clicked()"),self.btnPlay)
+
+    def btnRec(self):
+
+    def btnDelCurrent(self):
+
+    def btnDel(self):
+
+    def btnCopy(self):
+
+    def btnFirst(self):
+
+    def btnLast(self):
+
+    def btnSave(self):
+
+    def btnSaveAs(self):
+
+    def btnLoad(self):
+
+    def btnImport(self):
+
+    def btnInsert(self):
+
+    def btnSetFrame(self):
+
+    def btnPlay(self):
+
     def stopAll(self,stt):
         istt=not stt
         if stt:
@@ -82,50 +135,62 @@ class StartQT4(QtGui.QMainWindow):
         print("chkR1="+str(stt))
         if not stt:
             self.ui.chkRA.setChecked(stt)
+
     def chkR2(self,stt):
         print("chkR2="+str(stt))
         if not stt:
             self.ui.chkRA.setChecked(stt)
+
     def chkR3(self,stt):
         print("chkR3="+str(stt))
         if not stt:
             self.ui.chkRA.setChecked(stt)
+
     def chkR4(self,stt):
         print("chkR4="+str(stt))
         if not stt:
             self.ui.chkRA.setChecked(stt)
+
     def chkR5(self,stt):
         print("chkR5="+str(stt))
         if not stt:
             self.ui.chkRA.setChecked(stt)
+
     def chkR6(self,stt):
         print("chkR6="+str(stt))
         if not stt:
             self.ui.chkRA.setChecked(stt)
+
     def chkL7(self,stt):
         print("chkL7="+str(stt))
         if not stt:
             self.ui.chkLA.setChecked(stt)
+
     def chkL8(self,stt):
         print("chkL8="+str(stt))
         if not stt:
             self.ui.chkLA.setChecked(stt)
+
     def chkL9(self,stt):
         print("chkL9="+str(stt))
         if not stt:
             self.ui.chkLA.setChecked(stt)
+
     def chkL10(self,stt):
         print("chkL10="+str(stt))
         if not stt:
             self.ui.chkLA.setChecked(stt)
+
     def chkL11(self,stt):
         print("chkL11="+str(stt))
         if not stt:
             self.ui.chkLA.setChecked(stt)
+
     def chkL12(self,stt):
         print("chkL12="+str(stt))
         if not stt:
             self.ui.chkLA.setChecked(stt)
+
     def chkLA(self,stt):
         print("chkLA="+str(stt))
         if stt:
@@ -137,8 +202,7 @@ class StartQT4(QtGui.QMainWindow):
             self.ui.chkL12.setChecked(stt)
         else:
             self.ui.chkAllMotors.setChecked(stt)
-        # elif self.ui.chkRA.isChecked():
-        #     self.ui.chkAllMotors.setChecked(stt)
+
     def chkRA(self,stt):
         print("chkRA="+str(stt))
         if stt:
@@ -150,8 +214,7 @@ class StartQT4(QtGui.QMainWindow):
             self.ui.chkR6.setChecked(stt)
         else:
             self.ui.chkAllMotors.setChecked(stt)
-        # elif self.ui.chkLA.isChecked():
-        #     self.ui.chkAllMotors.setChecked(stt)
+
     def chkAllMotors(self,stt):
         print("chkAll="+str(stt))
         if stt:
